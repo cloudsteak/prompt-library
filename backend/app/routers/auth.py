@@ -45,8 +45,6 @@ async def google_login(settings: Settings = Depends(get_settings)) -> RedirectRe
         "redirect_uri": settings.google_redirect_uri,
         "response_type": "code",
         "scope": "openid email profile",
-        "access_type": "offline",
-        "prompt": "consent",
     }
     auth_url = f"{GOOGLE_AUTH_URL}?{urlencode(params)}"
     return RedirectResponse(url=auth_url)

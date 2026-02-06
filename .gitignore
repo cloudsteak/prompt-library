@@ -24,6 +24,7 @@ backend/htmlcov/
 backend/.mypy_cache/
 backend/.ruff_cache/
 backend/.ipynb_checkpoints/
+backend/app/routers/__pycache__/
 
 # Frontend (Node.js)
 frontend/node_modules/
