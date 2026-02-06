@@ -70,47 +70,69 @@ async def google_callback(
             detail="Missing authorization code",
         )
 
-    async with httpx.AsyncClient() as client:
-        # Exchange authorization code for tokens
-        token_response = await client.post(
-            GOOGLE_TOKEN_URL,
-            data={
-                "code": code,
-                "client_id": settings.google_client_id,
-                "client_secret": settings.google_client_secret,
-                "redirect_uri": settings.google_redirect_uri,
-                "grant_type": "authorization_code",
-            },
-        )
-
-        if token_response.status_code != 200:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Failed to exchange authorization code for tokens",
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        try:
+            # Exchange authorization code for tokens
+            token_response = await client.post(
+                GOOGLE_TOKEN_URL,
+                data={
+                    "code": code,
+                    "client_id": settings.google_client_id,
+                    "client_secret": settings.google_client_secret,
+                    "redirect_uri": settings.google_redirect_uri,
+                    "grant_type": "authorization_code",
+                },
             )
 
-        tokens = token_response.json()
-        access_token = tokens.get("access_token")
+            if token_response.status_code != 200:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Failed to exchange authorization code for tokens",
+                )
 
-        if not access_token:
+            tokens = token_response.json()
+            access_token = tokens.get("access_token")
+
+            if not access_token:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="No access token received from Google",
+                )
+        except httpx.ConnectTimeout:
             raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="No access token received from Google",
+                status_code=status.HTTP_504_GATEWAY_TIMEOUT,
+                detail="Connection to Google OAuth timed out. Please try again.",
+            )
+        except httpx.RequestError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail=f"Network error while connecting to Google OAuth: {exc}",
             )
 
-        # Fetch user profile from Google
-        userinfo_response = await client.get(
-            GOOGLE_USERINFO_URL,
-            headers={"Authorization": f"Bearer {access_token}"},
-        )
-
-        if userinfo_response.status_code != 200:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Failed to fetch user profile from Google",
+        try:
+            # Fetch user profile from Google
+            userinfo_response = await client.get(
+                GOOGLE_USERINFO_URL,
+                headers={"Authorization": f"Bearer {access_token}"},
             )
 
-        userinfo = userinfo_response.json()
+            if userinfo_response.status_code != 200:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Failed to fetch user profile from Google",
+                )
+
+            userinfo = userinfo_response.json()
+        except httpx.ConnectTimeout:
+            raise HTTPException(
+                status_code=status.HTTP_504_GATEWAY_TIMEOUT,
+                detail="Connection to Google UserInfo timed out. Please try again.",
+            )
+        except httpx.RequestError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail=f"Network error while fetching Google UserInfo: {exc}",
+            )
 
     google_id = userinfo.get("id")
     email = userinfo.get("email")
