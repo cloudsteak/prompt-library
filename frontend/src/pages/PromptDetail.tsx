@@ -212,7 +212,7 @@ export function PromptDetail() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-gray-500">Loading prompt...</div>
+        <div className="text-sigil-teal animate-pulse font-michroma text-xs tracking-widest uppercase">Deciphering Sigil...</div>
       </div>
     );
   }
@@ -223,9 +223,9 @@ export function PromptDetail() {
         <div className="text-red-600 mb-4">{error}</div>
         <button
           onClick={() => navigate('/')}
-          className="text-indigo-600 hover:text-indigo-500"
+          className="text-sigil-teal hover:text-white font-michroma text-[10px] tracking-widest uppercase transition-colors"
         >
-          Back to library
+          Back to deck
         </button>
       </div>
     );
@@ -280,7 +280,7 @@ export function PromptDetail() {
           {/* Copy Button */}
           <button
             onClick={handleCopy}
-            className="inline-flex items-center rounded-md bg-white dark:bg-gray-800 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            className="inline-flex items-center rounded-md bg-gray-50 dark:bg-sigil-obsidian px-3 py-2 text-xs font-michroma tracking-widest uppercase text-gray-900 dark:text-sigil-silver shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-white/10 hover:bg-gray-50 dark:hover:bg-white/5 transition-all"
             title="Copy to clipboard"
           >
             <svg className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
@@ -296,24 +296,14 @@ export function PromptDetail() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="inline-flex items-center rounded-lg bg-gray-900 dark:bg-sigil-teal px-4 py-2 text-xs font-michroma tracking-widest uppercase text-white dark:text-sigil-obsidian shadow-sm hover:bg-gray-800 dark:hover:bg-white transition-all sigil-glow disabled:opacity-50"
           >
-            {saving ? (
-              <>
-                <svg className="animate-spin -ml-0.5 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                </svg>
-                Saving...
-              </>
-            ) : (
-              'Save'
-            )}
+            {saving ? 'Saving...' : 'Save'}
           </button>
           {/* Delete Button */}
           <button
             onClick={() => setShowDeleteDialog(true)}
-            className="inline-flex items-center rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+            className="inline-flex items-center rounded-lg bg-red-600/10 px-4 py-2 text-xs font-michroma tracking-widest uppercase text-red-500 hover:bg-red-600 hover:text-white transition-all border border-red-500/30"
           >
             Delete
           </button>
@@ -420,17 +410,17 @@ export function PromptDetail() {
           <label htmlFor="tags" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors">
             Tags
           </label>
-          <div className="flex flex-wrap gap-1 p-2 min-h-[42px] rounded-md border-0 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 dark:focus-within:ring-indigo-500 bg-white dark:bg-gray-800 transition-colors">
+          <div className="flex flex-wrap gap-1 p-2 min-h-[42px] rounded-md border-0 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus-within:ring-2 focus-within:ring-inset focus-within:ring-sigil-teal dark:focus-within:ring-sigil-teal transition-colors">
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center gap-x-1 rounded-full bg-indigo-50 dark:bg-indigo-900/40 px-2 py-0.5 text-xs font-medium text-indigo-700 dark:text-indigo-300"
+                className="inline-flex items-center gap-x-1 rounded-full bg-sigil-teal/10 dark:bg-sigil-teal/20 text-sigil-teal dark:text-sigil-teal border-sigil-teal/30 tracking-tight transition-colors"
               >
                 {tag}
                 <button
                   type="button"
                   onClick={() => handleRemoveTag(tag)}
-                  className="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-indigo-200/80"
+                  className="group relative -mr-1 h-3.5 w-3.5 rounded-sm bg-sigil-teal/20 dark:bg-sigil-teal/40 stroke-sigil-teal/50 group-hover:stroke-sigil-teal/75 transition-colors transition-all transition-opacity transition-all group-hover:bg-sigil-teal/20"
                 >
                   <span className="sr-only">Remove</span>
                   <svg viewBox="0 0 14 14" className="h-3.5 w-3.5 stroke-indigo-700/50 group-hover:stroke-indigo-700/75" fill="none" stroke="currentColor">

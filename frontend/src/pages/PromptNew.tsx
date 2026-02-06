@@ -168,29 +168,16 @@ export function PromptNew() {
       <div className="flex items-center justify-between mb-6">
         <button
           onClick={handleCancel}
-          className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
+          className="text-sigil-teal hover:text-white font-michroma text-[10px] tracking-widest uppercase transition-colors"
         >
-          <svg className="w-5 h-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clipRule="evenodd" />
-          </svg>
           Cancel
         </button>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="inline-flex items-center rounded-lg bg-gray-900 dark:bg-sigil-teal px-4 py-2 text-xs font-michroma tracking-widest uppercase text-white dark:text-sigil-obsidian shadow-sm hover:bg-gray-800 dark:hover:bg-white transition-all sigil-glow disabled:opacity-50"
         >
-          {saving ? (
-            <>
-              <svg className="animate-spin -ml-0.5 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-              </svg>
-              Saving...
-            </>
-          ) : (
-            'Save'
-          )}
+          {saving ? 'Saving...' : 'Save'}
         </button>
       </div>
 
@@ -204,7 +191,7 @@ export function PromptNew() {
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="block w-full rounded-md border-0 py-2.5 px-3 text-gray-900 dark:text-white bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500 sm:text-sm sm:leading-6 transition-colors font-semibold"
+          className="block w-full rounded-md border-0 py-2.5 px-3 text-gray-900 dark:text-white bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sigil-teal dark:focus:ring-sigil-teal sm:text-sm sm:leading-6 transition-colors font-semibold"
           placeholder="Enter prompt title..."
         />
       </div>
@@ -221,7 +208,7 @@ export function PromptNew() {
             id="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 dark:text-white bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500 sm:text-sm transition-colors"
+            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 dark:text-white bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sigil-teal dark:focus:ring-sigil-teal sm:text-sm transition-colors"
             placeholder="Enter category..."
           />
         </div>
@@ -231,17 +218,17 @@ export function PromptNew() {
           <label htmlFor="tags" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors">
             Tags
           </label>
-          <div className="flex flex-wrap gap-1 p-2 min-h-[42px] rounded-md border-0 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 dark:focus-within:ring-indigo-500 bg-white dark:bg-gray-800 transition-colors">
+          <div className="flex flex-wrap gap-1 p-2 min-h-[42px] rounded-md border-0 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus-within:ring-2 focus-within:ring-inset focus-within:ring-sigil-teal dark:focus-within:ring-sigil-teal transition-colors">
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center gap-x-1 rounded-full bg-indigo-50 dark:bg-indigo-900/40 px-2 py-0.5 text-xs font-medium text-indigo-700 dark:text-indigo-300"
+                className="inline-flex items-center gap-x-1 rounded-full bg-sigil-teal/10 dark:bg-sigil-teal/20 text-sigil-teal dark:text-sigil-teal border-sigil-teal/30 tracking-tight transition-colors"
               >
                 {tag}
                 <button
                   type="button"
                   onClick={() => handleRemoveTag(tag)}
-                  className="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-indigo-200/80"
+                  className="group relative -mr-1 h-3.5 w-3.5 rounded-sm bg-sigil-teal/20 dark:bg-sigil-teal/40 stroke-sigil-teal/50 group-hover:stroke-sigil-teal/75 transition-colors transition-all transition-opacity transition-all group-hover:bg-sigil-teal/20"
                 >
                   <span className="sr-only">Remove</span>
                   <svg viewBox="0 0 14 14" className="h-3.5 w-3.5 stroke-indigo-700/50 group-hover:stroke-indigo-700/75" fill="none" stroke="currentColor">

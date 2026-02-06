@@ -68,9 +68,9 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
             onClick={onClick}
             disabled={disabled}
             title={title}
-            className={`p-2 rounded-md transition-colors ${isActive
-                ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300'
-                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+            className={`p-2 rounded-md transition-all ${isActive
+                ? 'bg-sigil-teal/20 text-sigil-teal dark:bg-sigil-teal/20 dark:text-sigil-teal'
+                : 'text-gray-600 dark:text-gray-400 hover:bg-white/10 dark:hover:bg-white/5'
                 } disabled:opacity-40 disabled:cursor-not-allowed`}
         >
             {children}
@@ -78,7 +78,7 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
     );
 
     return (
-        <div className="flex flex-col w-full h-full border dark:border-gray-700 rounded-md overflow-hidden bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus-within:ring-2 focus-within:ring-indigo-600 dark:focus-within:ring-indigo-500 transition-colors">
+        <div className="flex flex-col w-full h-full border dark:border-gray-700 rounded-md overflow-hidden bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus-within:ring-2 focus-within:ring-sigil-teal dark:focus-within:ring-sigil-teal transition-all">
             {/* Toolbar */}
             <div className="flex flex-wrap items-center gap-1 p-1 border-b dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
                 <MenuButton
@@ -186,12 +186,13 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
         .tiptap p.is-editor-empty:first-child::before {
           content: attr(data-placeholder);
           float: left;
-          color: #adb5bd;
+          color: #94a3b8;
           pointer-events: none;
           height: 0;
+          font-style: italic;
         }
         .dark .tiptap p.is-editor-empty:first-child::before {
-          color: #64748b;
+          color: #334155;
         }
         .tiptap:focus {
           outline: none;

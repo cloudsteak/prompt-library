@@ -257,7 +257,7 @@ export function Prompts() {
   if (isInitialLoad) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-gray-500">Loading prompts...</div>
+        <div className="text-sigil-teal animate-pulse font-michroma text-xs tracking-widest">TRANSMITTING SIGNALS...</div>
       </div>
     );
   }
@@ -287,15 +287,15 @@ export function Prompts() {
             d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
           />
         </svg>
-        <h3 className="mt-2 text-sm font-semibold text-gray-900 dark:text-white transition-colors">No prompts</h3>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 transition-colors">
-          Get started by creating your first prompt.
+        <h3 className="mt-2 text-sm font-semibold text-gray-900 dark:text-white transition-colors">Deck is empty</h3>
+        <p className="mt-1 text-sm text-gray-500 dark:text-sigil-silver transition-colors font-montserrat">
+          No Sigils have been inscribed yet.
         </p>
         <div className="mt-6">
           <button
             type="button"
             onClick={() => navigate('/new')}
-            className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="inline-flex items-center rounded-lg bg-gray-900 dark:bg-sigil-teal px-4 py-2 text-xs font-michroma tracking-widest uppercase text-white dark:text-sigil-obsidian shadow-sm hover:bg-gray-800 dark:hover:bg-white transition-all sigil-glow"
           >
             <svg
               className="-ml-0.5 mr-1.5 h-5 w-5"
@@ -360,7 +360,7 @@ export function Prompts() {
           <button
             type="button"
             onClick={() => navigate('/new')}
-            className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="inline-flex items-center rounded-lg bg-gray-900 dark:bg-sigil-teal px-4 py-2 text-xs font-michroma tracking-widest uppercase text-white dark:text-sigil-obsidian shadow-sm hover:bg-gray-800 dark:hover:bg-white transition-all sigil-glow"
           >
             <svg
               className="-ml-0.5 mr-1.5 h-5 w-5"
@@ -400,7 +400,7 @@ export function Prompts() {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search prompts..."
-                className="block w-full rounded-md border-0 py-2 pl-10 pr-3 text-gray-900 dark:text-white bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500 sm:text-sm sm:leading-6 transition-colors"
+                className="block w-full rounded-md border-0 py-2 pl-10 pr-3 text-gray-900 dark:text-white bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sigil-teal dark:focus:ring-sigil-teal sm:text-sm sm:leading-6 transition-colors"
               />
             </div>
           </div>
@@ -467,7 +467,7 @@ export function Prompts() {
                           type="checkbox"
                           checked={selectedTags.includes(tag)}
                           onChange={() => handleTagToggle(tag)}
-                          className="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-600 dark:focus:ring-indigo-500 bg-white dark:bg-gray-800"
+                          className="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-sigil-teal dark:text-sigil-teal font-montserrat tracking-tight"
                         />
                         <span className="ml-2 text-gray-700 dark:text-gray-300">{tag}</span>
                       </label>
@@ -502,7 +502,7 @@ export function Prompts() {
         {hasActiveFilters && (
           <div className="flex flex-wrap gap-2">
             {searchQuery && (
-              <span className="inline-flex items-center gap-x-1 rounded-full bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700">
+              <span className="inline-flex items-center gap-x-1 rounded-full bg-sigil-teal/10 text-sigil-teal dark:bg-sigil-teal/20 dark:text-sigil-teal font-montserrat tracking-tight transition-colors border-sigil-teal/30">
                 Search: {searchQuery}
                 <button
                   type="button"
@@ -510,12 +510,12 @@ export function Prompts() {
                     setSearchInput('');
                     updateSearchParams({ q: null });
                   }}
-                  className="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-indigo-200/80"
+                  className="group relative -mr-1 h-3.5 w-3.5 rounded-sm bg-sigil-teal/20 dark:bg-sigil-teal/40"
                 >
                   <span className="sr-only">Remove</span>
                   <svg
                     viewBox="0 0 14 14"
-                    className="h-3.5 w-3.5 stroke-indigo-700/50 group-hover:stroke-indigo-700/75"
+                    className="h-3.5 w-3.5 stroke-sigil-teal/50 group-hover:stroke-sigil-teal/75"
                   >
                     <path d="M4 4l6 6m0-6l-6 6" />
                   </svg>
@@ -523,17 +523,17 @@ export function Prompts() {
               </span>
             )}
             {selectedCategory && (
-              <span className="inline-flex items-center gap-x-1 rounded-full bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700">
+              <span className="inline-flex items-center gap-x-1 rounded-full bg-sigil-teal/10 text-sigil-teal dark:bg-sigil-teal/20 dark:text-sigil-teal font-montserrat tracking-tight transition-colors border-sigil-teal/30">
                 Category: {selectedCategory}
                 <button
                   type="button"
                   onClick={() => updateSearchParams({ category: null })}
-                  className="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-indigo-200/80"
+                  className="group relative -mr-1 h-3.5 w-3.5 rounded-sm bg-sigil-teal/20 dark:bg-sigil-teal/40"
                 >
                   <span className="sr-only">Remove</span>
                   <svg
                     viewBox="0 0 14 14"
-                    className="h-3.5 w-3.5 stroke-indigo-700/50 group-hover:stroke-indigo-700/75"
+                    className="h-3.5 w-3.5 stroke-sigil-teal/50 group-hover:stroke-sigil-teal/75"
                   >
                     <path d="M4 4l6 6m0-6l-6 6" />
                   </svg>
@@ -543,18 +543,18 @@ export function Prompts() {
             {selectedTags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center gap-x-1 rounded-full bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700"
+                className="inline-flex items-center gap-x-1 rounded-full bg-sigil-teal/10 text-sigil-teal dark:bg-sigil-teal/20 dark:text-sigil-teal font-montserrat tracking-tight transition-colors border-sigil-teal/30"
               >
                 Tag: {tag}
                 <button
                   type="button"
                   onClick={() => handleTagToggle(tag)}
-                  className="group relative -mr-1 h-3.5 w-3.5 rounded-sm hover:bg-indigo-200/80"
+                  className="group relative -mr-1 h-3.5 w-3.5 rounded-sm bg-sigil-teal/20 dark:bg-sigil-teal/40"
                 >
                   <span className="sr-only">Remove</span>
                   <svg
                     viewBox="0 0 14 14"
-                    className="h-3.5 w-3.5 stroke-indigo-700/50 group-hover:stroke-indigo-700/75"
+                    className="h-3.5 w-3.5 stroke-sigil-teal/50 group-hover:stroke-sigil-teal/75"
                   >
                     <path d="M4 4l6 6m0-6l-6 6" />
                   </svg>
@@ -590,7 +590,7 @@ export function Prompts() {
             <button
               type="button"
               onClick={clearFilters}
-              className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="inline-flex items-center rounded-md bg-sigil-teal px-3 py-2 text-xs font-michroma tracking-widest uppercase text-sigil-obsidian shadow-sm hover:bg-white transition-all transition-colors"
             >
               Clear filters
             </button>
@@ -639,7 +639,7 @@ export function Prompts() {
                   <tr
                     key={prompt.id}
                     onClick={() => handleRowClick(prompt.id)}
-                    className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="cursor-pointer hover:bg-gray-50 dark:hover:bg-white/5 transition-colors border-l-2 border-transparent hover:border-sigil-teal/40"
                   >
                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-white sm:pl-6">
                       {prompt.title}

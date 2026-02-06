@@ -2,6 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-gray-50 text-gray-900 antialiased dark:bg-gray-900 dark:text-gray-100 transition-colors duration-200;
+@layer base {
+  body {
+    @apply bg-white text-gray-900 font-montserrat antialiased dark:bg-sigil-obsidian dark:text-sigil-silver transition-colors duration-200;
+  }
+
+  .dark body {
+    background-image:
+      radial-gradient(circle at 50% 50%, rgba(0, 217, 213, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(0, 217, 213, 0.03) 0%, transparent 30%),
+      linear-gradient(to bottom, #050505, #0a0a0a);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-michroma;
+  }
+}
+
+.sigil-neural-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    radial-gradient(1px 1px at 25% 25%, rgba(0, 217, 213, 0.2) 1px, transparent 0),
+    radial-gradient(1px 1px at 50% 50%, rgba(0, 217, 213, 0.1) 1px, transparent 0),
+    radial-gradient(1px 1px at 75% 75%, rgba(0, 217, 213, 0.2) 1px, transparent 0),
+    radial-gradient(2px 2px at 15% 85%, rgba(0, 217, 213, 0.1) 1px, transparent 0);
+  background-size: 15% 15%;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Custom glow utility */
+.sigil-glow {
+  box-shadow: 0 0 15px rgba(0, 217, 213, 0.4);
+}
+
+.sigil-glow-inner {
+  box-shadow: inset 0 0 10px rgba(0, 217, 213, 0.4);
 }
