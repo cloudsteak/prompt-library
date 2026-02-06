@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { CookieConsent } from '../components/CookieConsent';
 
 export function Login() {
   const { isAuthenticated, isLoading } = useAuth();
@@ -40,18 +41,18 @@ export function Login() {
           <span className="text-[10px] sm:text-sm tracking-[0.2em] sm:tracking-[0.3em] font-michroma text-sigil-teal uppercase hidden sm:inline-block">Sigil Deck</span>
         </div>
         <div className="flex gap-4 sm:gap-8 text-[9px] sm:text-[11px] tracking-widest text-sigil-silver font-montserrat font-bold opacity-60">
-          <a href="#" className="hover:text-sigil-teal transition-colors uppercase min-h-[44px] flex items-center">Doc</a>
+          <Link to="/privacy" className="hover:text-sigil-teal transition-colors uppercase min-h-[44px] flex items-center">Privacy & Cookies</Link>
           <a href="#" className="hover:text-sigil-teal transition-colors uppercase min-h-[44px] flex items-center">Support</a>
         </div>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center px-4 w-full gap-8 sm:gap-16 pt-24 sm:pt-0">
         {/* Hero Section */}
-        <div className="text-center animate-in fade-in slide-in-from-bottom-4 duration-1000 z-20 w-full flex flex-col items-center">
-          <h1 className="text-[2.25rem] sm:text-[3rem] font-michroma tracking-[0.1em] sm:tracking-[0.15em] text-gray-900 dark:text-white uppercase mb-4 sm:mb-6">
+        <div className="text-center z-20 w-full flex flex-col items-center">
+          <h1 className="text-[2.25rem] sm:text-[3rem] font-michroma tracking-[0.1em] sm:tracking-[0.15em] text-gray-900 dark:text-white uppercase mb-4 sm:mb-6 subpixel-antialiased sm:pt-[3em]">
             Sigil Deck
           </h1>
-          <h2 className="text-[1rem] sm:text-[1.1rem] font-montserrat font-light tracking-[0.1em] sm:tracking-[0.15em] text-white/85 max-w-[280px] sm:max-w-none leading-relaxed">
+          <h2 className="text-[1rem] sm:text-[1.1rem] font-montserrat font-light tracking-[0.1em] sm:tracking-[0.15em] text-white/85 max-w-[280px] sm:max-w-none leading-relaxed opacity-90">
             Where every prompt is a power word.
           </h2>
         </div>
@@ -119,6 +120,7 @@ export function Login() {
           </div>
         </div>
       </footer>
+      <CookieConsent />
     </div>
   );
 }

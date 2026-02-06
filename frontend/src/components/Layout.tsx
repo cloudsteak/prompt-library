@@ -2,6 +2,7 @@ import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../contexts/ThemeContext';
 import { Sun, Moon, LogOut } from 'lucide-react';
+import { CookieConsent } from './CookieConsent';
 
 export function Layout() {
   const { user, logout } = useAuth();
@@ -33,7 +34,7 @@ export function Layout() {
 
             <div className="flex items-center space-x-2 sm:space-x-6">
               <nav className="hidden md:flex space-x-6 text-[10px] tracking-widest text-sigil-silver font-montserrat font-semibold opacity-60">
-                <a href="#" className="hover:text-sigil-teal transition-colors uppercase">Documentation</a>
+                <Link to="/privacy" className="hover:text-sigil-teal transition-colors uppercase">Privacy & Cookies</Link>
                 <a href="#" className="hover:text-sigil-teal transition-colors uppercase">Support</a>
               </nav>
 
@@ -79,6 +80,7 @@ export function Layout() {
           <Outlet />
         </div>
       </main>
+      <CookieConsent />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { Prompts } from './pages/Prompts';
 import { PromptDetail } from './pages/PromptDetail';
 import { PromptNew } from './pages/PromptNew';
 import { Login } from './pages/Login';
+import { Privacy } from './pages/Privacy';
 import { NotFound } from './pages/NotFound';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Prompts />} />
