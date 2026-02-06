@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '../contexts/ThemeContext';
+import { Sun, Moon } from 'lucide-react';
 import { CookieConsent } from '../components/CookieConsent';
 import logo from '../assets/logo.png';
 
 export function Login() {
   const { isAuthenticated, isLoading } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,9 +42,21 @@ export function Login() {
           <div className="h-6 w-px bg-sigil-silver/30 mx-3 sm:mx-4 hidden sm:block"></div>
           <span className="text-[10px] sm:text-sm tracking-[0.2em] sm:tracking-[0.3em] font-michroma text-sigil-teal uppercase hidden sm:inline-block">Sigil Deck</span>
         </div>
-        <div className="flex gap-4 sm:gap-8 text-[9px] sm:text-[11px] tracking-widest text-sigil-silver font-montserrat font-bold opacity-60">
-          <Link to="/privacy" className="hover:text-sigil-teal transition-colors uppercase min-h-[44px] flex items-center">Privacy & Cookies</Link>
-          <a href="#" className="hover:text-sigil-teal transition-colors uppercase min-h-[44px] flex items-center">Support</a>
+        <div className="flex items-center gap-4 sm:gap-8">
+          <div className="flex gap-4 sm:gap-8 text-[9px] sm:text-[11px] tracking-widest text-sigil-silver font-montserrat font-bold opacity-60">
+            <Link to="/privacy" className="hover:text-sigil-teal transition-colors uppercase min-h-[44px] flex items-center">Privacy & Cookies</Link>
+            <a href="#" className="hover:text-sigil-teal transition-colors uppercase min-h-[44px] flex items-center">Support</a>
+          </div>
+
+          <div className="h-4 w-px bg-sigil-silver/20 hidden sm:block"></div>
+
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg text-gray-400 hover:text-sigil-teal hover:bg-white/5 transition-all min-h-[44px] flex items-center"
+            title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+          >
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
         </div>
       </header>
 
@@ -51,7 +66,7 @@ export function Login() {
           <h1 className="text-[2.25rem] sm:text-[3rem] font-michroma tracking-[0.1em] sm:tracking-[0.15em] text-gray-900 dark:text-white uppercase mb-4 sm:mb-6 subpixel-antialiased sm:pt-[3em]">
             Sigil Deck
           </h1>
-          <h2 className="text-[1rem] sm:text-[1.1rem] font-montserrat font-light tracking-[0.1em] sm:tracking-[0.15em] text-white/85 max-w-[280px] sm:max-w-none leading-relaxed opacity-90">
+          <h2 className="text-[1rem] sm:text-[1.1rem] font-montserrat font-light tracking-[0.1em] sm:tracking-[0.15em] text-gray-600 dark:text-white/85 max-w-[280px] sm:max-w-none leading-relaxed opacity-90">
             Where every prompt is a power word.
           </h2>
         </div>
@@ -96,15 +111,15 @@ export function Login() {
 
         {/* Machine Layer SEO Block */}
         <div className="max-w-[700px] w-full mt-12 sm:mt-32 text-center pb-20 opacity-40 group hover:opacity-100 transition-opacity duration-700 z-20 px-6 sm:px-0">
-          <h3 className="text-[0.8rem] sm:text-[0.85rem] uppercase tracking-[0.3em] sm:tracking-[0.4em] font-michroma text-sigil-teal mb-4 sm:mb-6">The Professional AI Prompt Manager by Cloud Mentor</h3>
-          <p className="text-[0.8rem] sm:text-[0.85rem] leading-loose font-montserrat font-medium text-sigil-silver mx-auto italic">
+          <h3 className="text-[0.8rem] sm:text-[0.85rem] uppercase tracking-[0.3em] sm:tracking-[0.4em] font-michroma text-teal-700 dark:text-sigil-teal mb-4 sm:mb-6">The Professional AI Prompt Manager by Cloud Mentor</h3>
+          <p className="text-[0.8rem] sm:text-[0.85rem] leading-loose font-montserrat font-medium text-gray-600 dark:text-sigil-silver mx-auto italic">
             "Sigil Deck is a dedicated AI prompt library developed by Cloud Mentor. It provides a secure, cloud-integrated environment for architects and engineers to manage their AI workflows. By utilizing Google Authentication, Sigil Deck ensures that your most valuable AI power words and commands are archived with enterprise-grade security. Elevate your generative AI potential through the official Cloud Mentor prompt management portal."
           </p>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full py-10 sm:py-12 px-6 sm:px-8 border-t border-white/10 transition-colors bg-black/40 z-30 mt-auto">
+      {/* Footer - Always in Dark Mode Aesthetic */}
+      <footer className="w-full py-10 sm:py-12 px-6 sm:px-8 border-t border-white/10 transition-colors bg-[#0A0A0A] z-30 mt-auto">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 sm:gap-6">
           <div className="flex flex-col items-center md:items-start gap-3 sm:gap-2">
             <p className="text-[9px] sm:text-[10px] tracking-[0.2em] font-montserrat font-bold text-sigil-silver opacity-60">
