@@ -56,7 +56,7 @@ export function PromptDetail() {
   }, []);
 
   // Copy to clipboard functionality - Optimized for Rich Text & LLMs
-  const handleCopyFormatted = useCallback(async () => {
+  const handleCopy = useCallback(async () => {
     try {
       // Create a markdown version for plain-text pasting (perfect for LLMs)
       const turndownService = new TurndownService({
@@ -269,26 +269,25 @@ export function PromptDetail() {
       <div className="flex items-center justify-between mb-6">
         <button
           onClick={() => navigate('/')}
-          className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900"
+          className="inline-flex items-center text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
         >
           <svg className="w-5 h-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
             <path fillRule="evenodd" d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z" clipRule="evenodd" />
           </svg>
-          Back to prompts
+          Back to deck
         </button>
-        <div className="flex items-center gap-2">
-          {/* Copy Formatted Button */}
+        <div className="flex items-center gap-3">
+          {/* Copy Button */}
           <button
-            type="button"
-            onClick={handleCopyFormatted}
-            className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-medium text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-            title="Copy with formatting for Word/Notes"
+            onClick={handleCopy}
+            className="inline-flex items-center rounded-md bg-white dark:bg-gray-800 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-gray-100 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            title="Copy to clipboard"
           >
-            <svg className="h-4 w-4 mr-1.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            <svg className="h-5 w-5 mr-2 text-gray-400 dark:text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12a1.5 1.5 0 01.439 1.061V14.5A1.5 1.5 0 0115.5 16H14v-5.5a2.5 2.5 0 00-2.5-2.5H7V3.5z" />
+              <path d="M4.5 6A1.5 1.5 0 003 7.5v9A1.5 1.5 0 004.5 18h7a1.5 1.5 0 001.5-1.5v-5a1.5 1.5 0 00-1.5-1.5h-7z" />
             </svg>
-            Copy
+            Copy Prompt
           </button>
 
           <div className="w-px h-6 bg-gray-300 mx-1" />
@@ -386,7 +385,7 @@ export function PromptDetail() {
 
       {/* Title Input */}
       <div className="mb-4">
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors">
           Title
         </label>
         <input
@@ -394,7 +393,7 @@ export function PromptDetail() {
           id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+          className="block w-full rounded-md border-0 py-2.5 px-3 text-gray-900 dark:text-white bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500 sm:text-sm sm:leading-6 transition-colors font-semibold"
           placeholder="Enter prompt title..."
         />
       </div>
@@ -403,7 +402,7 @@ export function PromptDetail() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         {/* Category Input */}
         <div>
-          <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors">
             Category
           </label>
           <input
@@ -411,21 +410,21 @@ export function PromptDetail() {
             id="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
+            className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 dark:text-white bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500 sm:text-sm transition-colors"
             placeholder="Enter category..."
           />
         </div>
 
         {/* Tags Input with Autocomplete */}
         <div className="relative">
-          <label htmlFor="tags" className="block text-sm font-medium text-gray-700 mb-1">
+          <label htmlFor="tags" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors">
             Tags
           </label>
-          <div className="flex flex-wrap gap-1 p-2 min-h-[42px] rounded-md border-0 ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 bg-white">
+          <div className="flex flex-wrap gap-1 p-2 min-h-[42px] rounded-md border-0 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 dark:focus-within:ring-indigo-500 bg-white dark:bg-gray-800 transition-colors">
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center gap-x-1 rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700"
+                className="inline-flex items-center gap-x-1 rounded-full bg-indigo-50 dark:bg-indigo-900/40 px-2 py-0.5 text-xs font-medium text-indigo-700 dark:text-indigo-300"
               >
                 {tag}
                 <button
@@ -455,20 +454,20 @@ export function PromptDetail() {
                 setTimeout(() => setShowTagSuggestions(false), 150);
               }}
               onKeyDown={handleTagInputKeyDown}
-              className="flex-1 min-w-[120px] border-0 bg-transparent py-0.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm outline-none"
+              className="flex-1 min-w-[120px] border-0 bg-transparent py-0.5 text-gray-900 dark:text-white placeholder:text-gray-400 focus:ring-0 sm:text-sm outline-none"
               placeholder={tags.length === 0 ? 'Add tags...' : ''}
             />
           </div>
           {/* Tags Autocomplete Dropdown */}
           {showTagSuggestions && filteredTags.length > 0 && (
-            <div className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <div className="absolute z-10 mt-1 max-h-48 w-full overflow-auto rounded-md bg-white dark:bg-gray-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-gray-700 focus:outline-none sm:text-sm transition-all">
               {filteredTags.slice(0, 10).map((tag) => (
                 <button
                   key={tag}
                   type="button"
                   onMouseDown={(e) => e.preventDefault()}
                   onClick={() => handleAddTag(tag)}
-                  className="w-full cursor-pointer px-3 py-2 text-left hover:bg-gray-100"
+                  className="w-full cursor-pointer px-3 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 transition-colors"
                 >
                   {tag}
                 </button>
@@ -480,7 +479,7 @@ export function PromptDetail() {
 
       {/* Editor Area */}
       <div className="flex-1 min-h-[400px]">
-        <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
+        <label htmlFor="content" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 transition-colors">
           Content
         </label>
         <RichTextEditor

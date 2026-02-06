@@ -1,4 +1,5 @@
-# Prompt Library
+# Sigil Deck
+*Where every prompt is a power word.*
 
 A self-hosted, multi-tenant prompt library application for managing, organizing, and searching AI prompts. Built with Google OAuth authentication, full-text search, and a modern React frontend.
 
@@ -51,7 +52,7 @@ Follow these steps to configure Google OAuth for authentication:
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Click the project dropdown at the top of the page
 3. Click **"New Project"**
-4. Enter a project name (e.g., "Prompt Library")
+4. Enter a project name (e.g., "Sigil Deck")
 5. Click **"Create"**
 
 <!-- Screenshot placeholder: Google Cloud Console - New Project dialog -->
@@ -70,7 +71,7 @@ Follow these steps to configure Google OAuth for authentication:
 2. Select **"External"** user type (or "Internal" if using Google Workspace)
 3. Click **"Create"**
 4. Fill in the required fields:
-   - **App name**: "Prompt Library" (or your preferred name)
+   - **App name**: "Sigil Deck" (or your preferred name)
    - **User support email**: Your email address
    - **Developer contact email**: Your email address
 5. Click **"Save and Continue"**
@@ -90,7 +91,7 @@ Follow these steps to configure Google OAuth for authentication:
 1. Go to **"APIs & Services"** > **"Credentials"**
 2. Click **"Create Credentials"** > **"OAuth client ID"**
 3. Select **"Web application"** as the application type
-4. Enter a name (e.g., "Prompt Library Web Client")
+4. Enter a name (e.g., "Sigil Deck Web Client")
 5. Under **"Authorized JavaScript origins"**, add:
    ```
    http://localhost

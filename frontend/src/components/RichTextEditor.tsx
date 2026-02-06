@@ -69,8 +69,8 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
             disabled={disabled}
             title={title}
             className={`p-2 rounded-md transition-colors ${isActive
-                ? 'bg-indigo-100 text-indigo-700'
-                : 'text-gray-600 hover:bg-gray-100'
+                ? 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300'
+                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
                 } disabled:opacity-40 disabled:cursor-not-allowed`}
         >
             {children}
@@ -78,9 +78,9 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
     );
 
     return (
-        <div className="flex flex-col w-full h-full border rounded-md overflow-hidden bg-white ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
+        <div className="flex flex-col w-full h-full border dark:border-gray-700 rounded-md overflow-hidden bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus-within:ring-2 focus-within:ring-indigo-600 dark:focus-within:ring-indigo-500 transition-colors">
             {/* Toolbar */}
-            <div className="flex flex-wrap items-center gap-1 p-1 border-b bg-gray-50">
+            <div className="flex flex-wrap items-center gap-1 p-1 border-b dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
                 <MenuButton
                     onClick={() => editor.chain().focus().toggleBold().run()}
                     isActive={editor.isActive('bold')}
@@ -103,7 +103,7 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
                     <UnderlineIcon size={18} />
                 </MenuButton>
 
-                <div className="w-px h-6 bg-gray-300 mx-1" />
+                <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1" />
 
                 <MenuButton
                     onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
@@ -127,7 +127,7 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
                     <Heading3 size={18} />
                 </MenuButton>
 
-                <div className="w-px h-6 bg-gray-300 mx-1" />
+                <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1" />
 
                 <MenuButton
                     onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -177,7 +177,7 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
             </div>
 
             {/* Editor Content Area */}
-            <div className="flex-1 overflow-auto p-4 prose prose-sm max-w-none focus:outline-none">
+            <div className="flex-1 overflow-auto p-4 prose dark:prose-invert prose-sm max-w-none focus:outline-none transition-colors">
                 <EditorContent editor={editor} className="h-full min-h-[200px]" />
             </div>
 
@@ -189,6 +189,9 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
           color: #adb5bd;
           pointer-events: none;
           height: 0;
+        }
+        .dark .tiptap p.is-editor-empty:first-child::before {
+          color: #64748b;
         }
         .tiptap:focus {
           outline: none;
@@ -204,17 +207,28 @@ export function RichTextEditor({ content, onChange, placeholder }: RichTextEdito
           padding: 0.75rem;
           font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
+        .dark .prose pre {
+          background-color: #1e293b;
+          color: #e2e8f0;
+        }
         .prose code {
           background-color: #f3f4f6;
           padding: 0.2rem 0.4rem;
           border-radius: 0.25rem;
           font-size: 0.875em;
         }
+        .dark .prose code {
+          background-color: #1e293b;
+        }
         .prose blockquote {
           border-left: 4px solid #e5e7eb;
           padding-left: 1rem;
           font-style: italic;
           color: #4b5563;
+        }
+        .dark .prose blockquote {
+          border-left-color: #334155;
+          color: #94a3b8;
         }
         .prose ul {
           list-style-type: disc;

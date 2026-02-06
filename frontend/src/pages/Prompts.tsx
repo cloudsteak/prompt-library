@@ -287,8 +287,8 @@ export function Prompts() {
             d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
           />
         </svg>
-        <h3 className="mt-2 text-sm font-semibold text-gray-900">No prompts</h3>
-        <p className="mt-1 text-sm text-gray-500">
+        <h3 className="mt-2 text-sm font-semibold text-gray-900 dark:text-white transition-colors">No prompts</h3>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 transition-colors">
           Get started by creating your first prompt.
         </p>
         <div className="mt-6">
@@ -348,9 +348,12 @@ export function Prompts() {
 
       <div className="sm:flex sm:items-center sm:justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Library</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Manage your prompt collection
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white transition-colors">Sigil Deck</h1>
+          <p className="mt-1 text-sm text-indigo-600 dark:text-indigo-400 font-medium italic transition-colors">
+            Where every prompt is a power word.
+          </p>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 transition-colors">
+            Manage your collection
           </p>
         </div>
         <div className="mt-4 sm:mt-0">
@@ -397,7 +400,7 @@ export function Prompts() {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="Search prompts..."
-                className="block w-full rounded-md border-0 py-2 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-2 pl-10 pr-3 text-gray-900 dark:text-white bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500 sm:text-sm sm:leading-6 transition-colors"
               />
             </div>
           </div>
@@ -407,7 +410,7 @@ export function Prompts() {
             <select
               value={selectedCategory}
               onChange={(e) => handleCategoryChange(e.target.value)}
-              className="block w-full rounded-md border-0 py-2 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 py-2 pl-3 pr-10 text-gray-900 dark:text-white bg-white dark:bg-gray-800 ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:ring-2 focus:ring-inset focus:ring-indigo-600 dark:focus:ring-indigo-500 sm:text-sm sm:leading-6 transition-colors"
             >
               <option value="">All Categories</option>
               {categories.map((category) => (
@@ -423,7 +426,7 @@ export function Prompts() {
             <button
               type="button"
               onClick={() => setTagsDropdownOpen(!tagsDropdownOpen)}
-              className="relative w-full cursor-pointer rounded-md bg-white py-2 pl-3 pr-10 text-left text-gray-900 ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="relative w-full cursor-pointer rounded-md bg-white dark:bg-gray-800 py-2 pl-3 pr-10 text-left text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6 transition-colors"
             >
               <span className="block truncate">
                 {selectedTags.length > 0
@@ -451,22 +454,22 @@ export function Prompts() {
                   className="fixed inset-0 z-10"
                   onClick={() => setTagsDropdownOpen(false)}
                 />
-                <div className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                <div className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-gray-800 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-gray-700 focus:outline-none sm:text-sm transition-colors">
                   {availableTags.length === 0 ? (
                     <div className="px-3 py-2 text-gray-500">No tags available</div>
                   ) : (
                     availableTags.map((tag) => (
                       <label
                         key={tag}
-                        className="flex cursor-pointer items-center px-3 py-2 hover:bg-gray-100"
+                        className="flex cursor-pointer items-center px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                       >
                         <input
                           type="checkbox"
                           checked={selectedTags.includes(tag)}
                           onChange={() => handleTagToggle(tag)}
-                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                          className="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-indigo-600 dark:text-indigo-400 focus:ring-indigo-600 dark:focus:ring-indigo-500 bg-white dark:bg-gray-800"
                         />
-                        <span className="ml-2 text-gray-700">{tag}</span>
+                        <span className="ml-2 text-gray-700 dark:text-gray-300">{tag}</span>
                       </label>
                     ))
                   )}
@@ -598,31 +601,31 @@ export function Prompts() {
       {/* Prompts Table */}
       {!hasNoResults && (
         <>
-          <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-300">
-              <thead className="bg-gray-50">
+          <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 dark:ring-gray-700 sm:rounded-lg transition-colors">
+            <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-800">
                 <tr>
                   <th
                     scope="col"
-                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                    className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 sm:pl-6"
                   >
                     Title
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100"
                   >
                     Category
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100"
                   >
                     Tags
                   </th>
                   <th
                     scope="col"
-                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900 dark:text-gray-100"
                   >
                     Updated
                   </th>
@@ -631,26 +634,26 @@ export function Prompts() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800 transition-colors">
                 {prompts.map((prompt) => (
                   <tr
                     key={prompt.id}
                     onClick={() => handleRowClick(prompt.id)}
-                    className="cursor-pointer hover:bg-gray-50"
+                    className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                   >
-                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-white sm:pl-6">
                       {prompt.title}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                       {prompt.category || '—'}
                     </td>
-                    <td className="px-3 py-4 text-sm text-gray-500">
+                    <td className="px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                       {prompt.tags && prompt.tags.length > 0 ? (
                         <div className="flex flex-wrap gap-1">
                           {prompt.tags.map((tag, index) => (
                             <span
                               key={index}
-                              className="inline-flex items-center rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600"
+                              className="inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-700 px-2 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-300"
                             >
                               {tag}
                             </span>
@@ -660,7 +663,7 @@ export function Prompts() {
                         '—'
                       )}
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500 dark:text-gray-400">
                       {formatDate(prompt.updated_at)}
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
@@ -685,31 +688,31 @@ export function Prompts() {
 
           {total > PAGE_SIZE && (
             <nav
-              className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 mt-4 rounded-lg shadow ring-1 ring-black ring-opacity-5"
+              className="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 sm:px-6 mt-4 rounded-lg shadow ring-1 ring-black ring-opacity-5 dark:ring-gray-700 transition-colors"
               aria-label="Pagination"
             >
               <div className="hidden sm:block">
-                <p className="text-sm text-gray-700">
-                  Showing <span className="font-medium">{showingFrom}</span> to{' '}
-                  <span className="font-medium">{showingTo}</span> of{' '}
-                  <span className="font-medium">{total}</span> results
+                <p className="text-sm text-gray-700 dark:text-gray-300">
+                  Showing <span className="font-medium text-gray-900 dark:text-white">{showingFrom}</span> to{' '}
+                  <span className="font-medium text-gray-900 dark:text-white">{showingTo}</span> of{' '}
+                  <span className="font-medium text-gray-900 dark:text-white">{total}</span> results
                 </p>
               </div>
               <div className="flex flex-1 justify-between sm:justify-end gap-3">
                 <button
                   onClick={handlePrevious}
                   disabled={offset === 0}
-                  className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="relative inline-flex items-center rounded-md bg-white dark:bg-gray-800 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 focus-visible:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Previous
                 </button>
-                <span className="text-sm text-gray-700 self-center">
+                <span className="text-sm text-gray-700 dark:text-gray-300 self-center">
                   Page {currentPage} of {totalPages}
                 </span>
                 <button
                   onClick={handleNext}
                   disabled={offset + PAGE_SIZE >= total}
-                  className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="relative inline-flex items-center rounded-md bg-white dark:bg-gray-800 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-white ring-1 ring-inset ring-gray-300 dark:ring-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 focus-visible:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   Next
                 </button>
