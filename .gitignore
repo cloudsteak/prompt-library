@@ -25,6 +25,7 @@ backend/.mypy_cache/
 backend/.ruff_cache/
 backend/.ipynb_checkpoints/
 backend/app/routers/__pycache__/
+**/__pycache__/
 
 # Frontend (Node.js)
 frontend/node_modules/
@@ -44,4 +45,5 @@ frontend/.prettiercache
 # Project specific
 .kerno/
 .ralph-tui/
+
 
