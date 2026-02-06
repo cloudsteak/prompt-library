@@ -19,15 +19,15 @@ export function Layout() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center self-center">
-              <a href="https://cloudmentor.hu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 group transition-all">
-                <svg className="h-[32px] w-auto text-sigil-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <a href="https://cloudmentor.hu" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 group transition-all min-h-[44px]">
+                <svg className="h-[28px] sm:h-[32px] w-auto text-sigil-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M17.5 19c.3 0 .5-.1.7-.2.6-.4.8-1.2.4-1.8l-1.5-2.5c-.2-.3-.5-.5-.9-.5H7.8c-.4 0-.7.2-.9.5L5.4 17c-.4.6-.2 1.4.4 1.8.2.1.4.2.7.2h11zM12 5c-3.3 0-6 2.7-6 6 0 .3 0 .5.1.8-.6.5-1 1.2-1 2.1 0 1.6 1.3 3 3 3h4c1.7 0 3-1.4 3-3 0-.9-.4-1.7-1.1-2.2.1-.3.1-.5.1-.8 0-3.3-2.7-6-6-6z" />
                 </svg>
-                <span className="text-gray-900 dark:text-white font-montserrat font-bold tracking-tight text-lg group-hover:text-sigil-teal transition-colors flex items-center">Cloud Mentor</span>
+                <span className="text-gray-900 dark:text-white font-montserrat font-bold tracking-tight text-base sm:text-lg group-hover:text-sigil-teal transition-colors flex items-center">Cloud Mentor</span>
               </a>
-              <div className="h-6 w-px bg-sigil-silver/30 mx-4 hidden sm:block self-center"></div>
-              <Link to="/" className="flex items-center gap-2 self-center">
-                <span className="text-sm tracking-[0.3em] font-michroma text-sigil-teal uppercase flex items-center">Sigil Deck</span>
+              <div className="h-6 w-px bg-sigil-silver/30 mx-3 sm:mx-4 hidden sm:block self-center"></div>
+              <Link to="/" className="flex items-center gap-2 self-center min-h-[44px]">
+                <span className="text-xs sm:text-sm tracking-[0.2em] sm:tracking-[0.3em] font-michroma text-sigil-teal uppercase flex items-center">Sigil Deck</span>
               </Link>
             </div>
 
