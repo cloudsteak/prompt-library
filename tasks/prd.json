@@ -1,0 +1,375 @@
+{
+  "name": "Multi-Tenant Prompt Library Application",
+  "branchName": "feature/multi-tenant-prompt-library",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Project scaffolding and Docker Compose setup",
+      "description": "As a developer, I want to clone the repo and run `docker-compose up` so that all services start correctly with health checks passing.",
+      "acceptanceCriteria": [
+        "Create project directory structure: /backend, /frontend, /nginx, /docker",
+        "Create docker-compose.yml with services: db, backend, frontend, nginx",
+        "PostgreSQL service with health check (pg_isready)",
+        "Backend service depends on healthy db, has health check endpoint /health",
+        "Frontend service with health check",
+        "Nginx service depends on backend and frontend, has health check",
+        "Create .env.example with all required environment variables documented",
+        "Create README.md with setup instructions placeholder"
+      ],
+      "priority": 1,
+      "passes": true,
+      "dependsOn": [],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-002",
+      "title": "PostgreSQL database schema and migrations",
+      "description": "As a developer, I want the database schema created automatically on startup so that the application has all required tables.",
+      "acceptanceCriteria": [
+        "Create Alembic migration setup in backend",
+        "Create users table: id (UUID), google_id (unique), email, name, picture_url, created_at, updated_at",
+        "Create prompts table: id (UUID), user_id (FK), title, content (TEXT), category, tags (TEXT[]), created_at, updated_at",
+        "Enable Row-Level Security on prompts table",
+        "Create RLS policy: users can only SELECT/INSERT/UPDATE/DELETE their own prompts",
+        "Create GIN index on prompts for full-text search (title, tags, content with weights)",
+        "Migrations run automatically on backend startup",
+        "Create index on prompts.user_id for query performance"
+      ],
+      "priority": 1,
+      "passes": true,
+      "dependsOn": [
+        "US-001"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-003",
+      "title": "FastAPI backend foundation with health checks",
+      "description": "As a developer, I want a FastAPI backend with proper structure so that I can build API endpoints on a solid foundation.",
+      "acceptanceCriteria": [
+        "Create FastAPI application in /backend/app/main.py",
+        "Implement /health endpoint returning {\"status\": \"healthy\", \"database\": \"connected\"}",
+        "Configure SQLAlchemy async with PostgreSQL",
+        "Set up Pydantic settings for environment variables",
+        "Configure CORS for frontend origin",
+        "Create Dockerfile with hot-reload (uvicorn --reload)",
+        "Create requirements.txt with all dependencies"
+      ],
+      "priority": 1,
+      "passes": true,
+      "dependsOn": [
+        "US-001"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-004",
+      "title": "Google OAuth 2.0 authentication flow",
+      "description": "As a user, I want to log in with my Google account so that I can securely access my prompts.",
+      "acceptanceCriteria": [
+        "Create /auth/google/login endpoint that redirects to Google OAuth consent screen",
+        "Create /auth/google/callback endpoint that handles OAuth callback",
+        "Exchange authorization code for tokens with Google",
+        "Fetch user profile (id, email, name, picture) from Google API",
+        "Create or update user record in database",
+        "Generate JWT token with user_id claim",
+        "Set JWT in httpOnly, secure (in production), sameSite cookie",
+        "Document Google Cloud Console setup steps in .env.example"
+      ],
+      "priority": 2,
+      "passes": true,
+      "dependsOn": [
+        "US-002",
+        "US-003"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-005",
+      "title": "Authentication middleware and session management",
+      "description": "As a developer, I want authentication middleware so that API endpoints are protected and user context is available.",
+      "acceptanceCriteria": [
+        "Create JWT validation middleware",
+        "Extract user_id from valid JWT and add to request state",
+        "Create /auth/me endpoint returning current user profile",
+        "Create /auth/logout endpoint that clears the auth cookie",
+        "Return 401 for requests without valid JWT to protected endpoints",
+        "Set PostgreSQL session variable for RLS (SET app.current_user_id)"
+      ],
+      "priority": 2,
+      "passes": true,
+      "dependsOn": [
+        "US-004"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-006",
+      "title": "Prompts CRUD API endpoints",
+      "description": "As a user, I want API endpoints to manage my prompts so that I can create, read, update, and delete them.",
+      "acceptanceCriteria": [
+        "POST /api/prompts - Create prompt (title, content, category, tags)",
+        "GET /api/prompts - List user's prompts with pagination (limit, offset)",
+        "GET /api/prompts/{id} - Get single prompt by ID",
+        "PUT /api/prompts/{id} - Update prompt",
+        "DELETE /api/prompts/{id} - Delete prompt (returns 204)",
+        "All endpoints respect RLS (users only see their own prompts)",
+        "Validate request bodies with Pydantic schemas",
+        "Return proper HTTP status codes (201, 200, 204, 404, 422)"
+      ],
+      "priority": 2,
+      "passes": true,
+      "dependsOn": [
+        "US-005"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-007",
+      "title": "Full-text search and filtering API",
+      "description": "As a user, I want to search and filter my prompts so that I can quickly find what I need.",
+      "acceptanceCriteria": [
+        "Add search query parameter to GET /api/prompts for full-text search",
+        "Search weighted: title (A) > tags (B) > content (C)",
+        "Add category query parameter for exact category filter",
+        "Add tags query parameter (comma-separated) for tag filtering",
+        "Combine filters with AND logic",
+        "Return results sorted by relevance when searching, by updated_at otherwise",
+        "Include total count in response for pagination"
+      ],
+      "priority": 3,
+      "passes": true,
+      "dependsOn": [
+        "US-006"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-008",
+      "title": "User tags autocomplete endpoint",
+      "description": "As a user, I want tag suggestions from my existing tags so that I can maintain consistent tagging.",
+      "acceptanceCriteria": [
+        "Create GET /api/tags endpoint returning user's unique tags",
+        "Add optional q query parameter for prefix filtering",
+        "Return tags sorted by usage frequency (most used first)",
+        "Limit results to 20 tags",
+        "Response format: {\"tags\": [\"tag1\", \"tag2\", ...]}"
+      ],
+      "priority": 3,
+      "passes": true,
+      "dependsOn": [
+        "US-006"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-009",
+      "title": "React frontend scaffolding with Vite",
+      "description": "As a developer, I want a React frontend with proper tooling so that I can build the UI efficiently.",
+      "acceptanceCriteria": [
+        "Initialize Vite + React + TypeScript project in /frontend",
+        "Configure TailwindCSS with sensible defaults",
+        "Set up React Router for client-side routing",
+        "Create basic layout component with header and main content area",
+        "Configure Vite proxy to backend API (for development)",
+        "Create Dockerfile with hot-reload (vite dev with --host)",
+        "Create API client utility with fetch wrapper (handles cookies, errors)"
+      ],
+      "priority": 1,
+      "passes": true,
+      "dependsOn": [
+        "US-001"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-010",
+      "title": "Authentication UI and protected routes",
+      "description": "As a user, I want to see a login page and be redirected appropriately so that I can access the application securely.",
+      "acceptanceCriteria": [
+        "Create login page with Sign in with Google button",
+        "Implement auth context/provider to manage user state",
+        "Fetch /auth/me on app load to check authentication",
+        "Redirect unauthenticated users to login page",
+        "Redirect authenticated users from login to prompts list",
+        "Display user name and profile picture in header when logged in",
+        "Implement logout button that calls /auth/logout and redirects to login"
+      ],
+      "priority": 2,
+      "passes": true,
+      "dependsOn": [
+        "US-005",
+        "US-009"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-011",
+      "title": "Prompts list view with table layout",
+      "description": "As a user, I want to see my prompts in a table so that I can browse and manage them efficiently.",
+      "acceptanceCriteria": [
+        "Create prompts list page at /prompts route",
+        "Display prompts in table with columns: Title, Category, Tags, Updated",
+        "Implement pagination controls (previous/next, showing X of Y)",
+        "Each row is clickable, navigates to prompt detail page",
+        "Show loading state while fetching",
+        "Show empty state with Create your first prompt CTA when no prompts",
+        "Add New Prompt button in header/toolbar"
+      ],
+      "priority": 2,
+      "passes": true,
+      "dependsOn": [
+        "US-006",
+        "US-010"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-012",
+      "title": "Search and filter UI",
+      "description": "As a user, I want search and filter controls so that I can find prompts quickly.",
+      "acceptanceCriteria": [
+        "Add search input field with debounced search (300ms)",
+        "Add category filter dropdown (populated from user's categories)",
+        "Add tags filter (multi-select from user's tags)",
+        "Filters update URL query parameters for shareability",
+        "Clear filters button when any filter is active",
+        "Show No results found when search/filter returns empty"
+      ],
+      "priority": 3,
+      "passes": true,
+      "dependsOn": [
+        "US-007",
+        "US-008",
+        "US-011"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-013",
+      "title": "Prompt detail page with split-pane Markdown editor",
+      "description": "As a user, I want to view and edit a prompt with Markdown preview so that I can write formatted content easily.",
+      "acceptanceCriteria": [
+        "Create prompt detail/edit page at /prompts/:id route",
+        "Split-pane layout: editor on left, live Markdown preview on right",
+        "Title input field at top",
+        "Category input field (free-form text)",
+        "Tags input with autocomplete from user's existing tags",
+        "Save button that calls PUT endpoint",
+        "Show save success/error feedback (toast notification)",
+        "Back button/link to return to list",
+        "Responsive: stack vertically on mobile"
+      ],
+      "priority": 3,
+      "passes": true,
+      "dependsOn": [
+        "US-008",
+        "US-011"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-014",
+      "title": "Create new prompt page",
+      "description": "As a user, I want to create a new prompt so that I can add to my library.",
+      "acceptanceCriteria": [
+        "Create new prompt page at /prompts/new route",
+        "Same layout as edit page (split-pane editor)",
+        "All fields empty initially",
+        "Save button calls POST endpoint",
+        "On successful save, redirect to the new prompt's detail page",
+        "Cancel button returns to list without saving"
+      ],
+      "priority": 3,
+      "passes": true,
+      "dependsOn": [
+        "US-013"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-015",
+      "title": "Copy prompt functionality",
+      "description": "As a user, I want to copy prompts to clipboard so that I can use them quickly in other applications.",
+      "acceptanceCriteria": [
+        "Add copy button in prompt list (icon button in actions column)",
+        "Add copy buttons in prompt detail page",
+        "Copy button copies raw content",
+        "Copy as Markdown button copies content with title as H1 header",
+        "Show toast notification on successful copy",
+        "Handle clipboard API errors gracefully"
+      ],
+      "priority": 4,
+      "passes": true,
+      "dependsOn": [
+        "US-011",
+        "US-013"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-016",
+      "title": "Delete prompt with confirmation",
+      "description": "As a user, I want to delete prompts with confirmation so that I don't accidentally lose data.",
+      "acceptanceCriteria": [
+        "Add delete button in prompt detail page",
+        "Show confirmation dialog: Are you sure you want to delete [title]?",
+        "Dialog has Cancel and Delete buttons",
+        "Delete button calls DELETE endpoint",
+        "On success, redirect to prompts list with success toast",
+        "On error, show error toast and keep dialog open"
+      ],
+      "priority": 4,
+      "passes": true,
+      "dependsOn": [
+        "US-013"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-017",
+      "title": "Nginx reverse proxy configuration",
+      "description": "As a developer, I want Nginx to route requests correctly so that the application works as a unified whole.",
+      "acceptanceCriteria": [
+        "Create Nginx configuration in /nginx/nginx.conf",
+        "Route /api/* and /auth/* to backend service",
+        "Route all other requests to frontend service",
+        "Configure WebSocket support for Vite HMR",
+        "Set appropriate proxy headers (X-Real-IP, X-Forwarded-For, Host)",
+        "Configure health check endpoint",
+        "Expose on port 80 (mapped to host port in docker-compose)"
+      ],
+      "priority": 1,
+      "passes": true,
+      "dependsOn": [
+        "US-001"
+      ],
+      "completionNotes": "Completed by agent"
+    },
+    {
+      "id": "US-018",
+      "title": "Documentation and setup guide",
+      "description": "As a developer, I want complete documentation so that I can set up and run the project easily.",
+      "acceptanceCriteria": [
+        "Complete README.md with: project description, features list, tech stack",
+        "Prerequisites section (Docker, Google Cloud account)",
+        "Step-by-step Google OAuth setup instructions with screenshots placeholders",
+        "Environment variables documentation in .env.example with comments",
+        "Quick start: cp .env.example .env, configure, docker-compose up",
+        "Development workflow section (hot-reload, logs, rebuilding)",
+        "Troubleshooting section with common issues"
+      ],
+      "priority": 4,
+      "passes": true,
+      "dependsOn": [
+        "US-001",
+        "US-004",
+        "US-017"
+      ],
+      "completionNotes": "Completed by agent"
+    }
+  ],
+  "metadata": {
+    "updatedAt": "2026-02-05T23:59:48.623Z"
+  }
+}

@@ -1,0 +1,90 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: prompt-inventory-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-promptlib}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-promptlib}
+      POSTGRES_DB: ${POSTGRES_DB:-promptlib}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-promptlib} -d ${POSTGRES_DB:-promptlib}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - prompt-inventory-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: prompt-inventory-backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-promptlib}:${POSTGRES_PASSWORD:-promptlib}@db:5432/${POSTGRES_DB:-promptlib}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+    volumes:
+      - ./backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - prompt-inventory-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: prompt-inventory-frontend
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:80}
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5173"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - prompt-inventory-network
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: prompt-inventory-nginx
+    ports:
+      - "${HOST_PORT:-80}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/nginx-health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - prompt-inventory-network
+
+networks:
+  prompt-inventory-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
